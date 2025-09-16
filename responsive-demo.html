@@ -15,66 +15,156 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
             color: #333;
-            background: #f5f5f5;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
         }
 
         .device-info {
             position: fixed;
-            top: 10px;
-            right: 10px;
-            background: #2c3e50;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 0.8rem;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 0.85rem;
             z-index: 1000;
-            max-width: 200px;
+            max-width: 250px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
             overflow: hidden;
+            position: relative;
         }
 
         .header {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 30px;
+            padding: 50px 30px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.1;
         }
 
         .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 3rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
         }
 
         .nav {
-            background: #2c3e50;
-            padding: 15px;
+            background: rgba(44, 62, 80, 0.95);
+            padding: 20px;
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
+            backdrop-filter: blur(10px);
         }
 
         .nav a {
             color: white;
             text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: background 0.3s;
+            padding: 12px 24px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            border: 2px solid transparent;
         }
 
         .nav a:hover {
-            background: #34495e;
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
         }
 
         .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+            background: #ffffff;
+            border-radius: 15px;
             padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            color: #333;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section p {
+            color: #333;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .code-example {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 20px 0;
+            overflow-x: auto;
+            border-left: 4px solid #667eea;
+        }
+
+        .demo-description {
+            background: rgba(255,255,255,0.95);
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #27ae60;
+            margin: 20px 0;
         }
 
         /* Responsive Grid Demo */
@@ -86,16 +176,40 @@
         }
 
         .grid-item {
-            background: linear-gradient(135deg, #3498db, #2980b9);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 20px;
-            border-radius: 8px;
+            padding: 25px;
+            border-radius: 15px;
             text-align: center;
-            min-height: 150px;
+            min-height: 180px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grid-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .grid-item:hover::before {
+            left: 100%;
         }
 
         /* Responsive Images */
@@ -121,6 +235,7 @@
             font-size: clamp(0.9rem, 2.5vw, 1.1rem);
             line-height: 1.6;
             margin-bottom: 15px;
+            color: #333;
         }
 
         /* Navigation Patterns */
@@ -160,39 +275,71 @@
 
         /* Breakpoint Indicators */
         .breakpoint-indicator {
-            background: #ecf0f1;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 15px;
             text-align: center;
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
+            position: relative;
+            overflow: hidden;
         }
 
         .breakpoint-indicator::before {
-            content: "Desktop (1200px+)";
-            color: #27ae60;
+            content: "🖥️ Desktop (1200px+)";
+            position: relative;
+            z-index: 1;
+        }
+
+        .breakpoint-indicator::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.3;
         }
 
         /* Media Queries */
         
         /* Large Tablets and Small Laptops */
         @media (max-width: 1024px) {
+            body {
+                padding: 10px;
+            }
+            
             .container {
-                margin: 10px;
-                border-radius: 5px;
+                border-radius: 15px;
             }
             
             .content {
-                padding: 20px;
+                padding: 30px;
+            }
+            
+            .section {
+                padding: 25px;
+            }
+            
+            .header {
+                padding: 40px 30px;
             }
             
             .header h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
+            }
+            
+            .breakpoint-indicator {
+                background: linear-gradient(135deg, #f39c12, #e67e22);
+                box-shadow: 0 8px 25px rgba(243, 156, 18, 0.3);
             }
             
             .breakpoint-indicator::before {
-                content: "Tablet Landscape (768px - 1024px)";
-                color: #f39c12;
+                content: "💻 Tablet Landscape (768px - 1024px)";
             }
         }
 
@@ -201,14 +348,68 @@
             .nav {
                 flex-direction: column;
                 align-items: center;
+                padding: 15px;
+            }
+            
+            .nav a {
+                padding: 10px 20px;
             }
             
             .responsive-grid {
                 grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 15px;
+                gap: 20px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 20px;
+                margin-bottom: 30px;
             }
             
             .header {
+                padding:30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .breakpoint-indicator {
+                background: linear-gradient(135deg, #e67e22, #d35400);
+                box-shadow: 0 8px 25px rgba(230, 126, 34, 0.3);
+            }
+            
+            .breakpoint-indicator::before {
+                content: "📱 Tablet Portrait (481px - 768px)";
+            }
+        }
+
+        /* Mobile Landscape */
+        @media (max-width: 640px) {
+            body {
+                padding: 5px;
+            }
+            
+            .content {
+                padding: 15px;
+            }
+            
+            .section {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            
+            .responsive-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            
+            .grid-item {
+                min-height: 140px;
+                font-size: 0.95rem;
                 padding: 20px;
             }
             
@@ -216,31 +417,14 @@
                 font-size: 1.8rem;
             }
             
-            .breakpoint-indicator::before {
-                content: "Tablet Portrait (481px - 768px)";
-                color: #e67e22;
-            }
-        }
-
-        /* Mobile Landscape */
-        @media (max-width: 640px) {
-            .content {
+            .breakpoint-indicator {
+                background: linear-gradient(135deg, #e74c3c, #c0392b);
+                box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
                 padding: 15px;
             }
             
-            .responsive-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
-            
-            .grid-item {
-                min-height: 120px;
-                font-size: 0.9rem;
-            }
-            
             .breakpoint-indicator::before {
-                content: "Mobile Landscape (481px - 640px)";
-                color: #e74c3c;
+                content: "📱 Mobile Landscape (481px - 640px)";
             }
         }
 
@@ -293,13 +477,41 @@
                 min-height: 100px;
             }
             
+            body {
+                padding: 5px;
+            }
+            
             .content {
                 padding: 10px;
             }
             
+            .section {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .header {
+                padding: 20px 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .grid-item {
+                min-height: 120px;
+                font-size: 0.9rem;
+                padding: 15px;
+            }
+            
+            .breakpoint-indicator {
+                background: linear-gradient(135deg, #9b59b6, #8e44ad);
+                box-shadow: 0 8px 25px rgba(155, 89, 182, 0.3);
+                padding: 15px;
+            }
+            
             .breakpoint-indicator::before {
-                content: "Mobile Portrait (≤ 480px)";
-                color: #9b59b6;
+                content: "📱 Mobile Portrait (≤ 480px)";
             }
         }
 
@@ -325,12 +537,38 @@
         /* Dark mode support */
         @media (prefers-color-scheme: dark) {
             body {
-                background: #1a1a1a;
+                background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
                 color: #e0e0e0;
             }
             
             .container {
                 background: #2d2d2d;
+            }
+            
+            .section {
+                background: #3a3a3a;
+                color: #e0e0e0;
+            }
+            
+            .section h2 {
+                color: #ecf0f1;
+            }
+            
+            .section p {
+                color: #bdc3c7;
+            }
+            
+            .typography-demo h2 {
+                color: #ecf0f1;
+            }
+            
+            .typography-demo p {
+                color: #bdc3c7;
+            }
+            
+            .demo-description {
+                background: rgba(52, 73, 94, 0.95);
+                color: #ecf0f1;
             }
             
             .breakpoint-indicator {
@@ -452,9 +690,9 @@
         <div class="content">
             <div class="breakpoint-indicator"></div>
 
-            <div class="demo-section" id="grid">
-                <h3>Responsive Grid Layout</h3>
-                <p>This grid automatically adjusts the number of columns based on screen size using CSS Grid's auto-fit and minmax functions.</p>
+            <div class="section" id="grid">
+                <h2>Responsive Grid Layout</h2>
+                <p>This grid automatically adjusts the number of columns based on screen size using CSS Grid's auto-fit and minmax functions. Watch how the layout transforms as you resize your browser window.</p>
                 
                 <div class="responsive-grid">
                     <div class="grid-item">Item 1</div>
@@ -488,9 +726,9 @@
 }</div>
             </div>
 
-            <div class="demo-section" id="images">
-                <h3>Responsive Images</h3>
-                <p>Images that scale properly across all device sizes while maintaining aspect ratio.</p>
+            <div class="section" id="images">
+                <h2>Responsive Images</h2>
+                <p>Images that scale properly across all device sizes while maintaining aspect ratio. This demo uses SVG for crisp display at any resolution.</p>
                 
                 <div class="image-demo">
                     <svg class="responsive-image" width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
@@ -521,8 +759,11 @@
 }</div>
             </div>
 
-            <div class="demo-section" id="typography">
-                <h3>Fluid Typography</h3>
+            <div class="section" id="typography">
+                <h2>Fluid Typography</h2>
+                <div class="demo-description">
+                    <p>Text that scales smoothly between different screen sizes using CSS clamp() function. This ensures optimal readability across all devices.</p>
+                </div>
                 <div class="typography-demo">
                     <h2>This heading scales with viewport size</h2>
                     <p>This paragraph text also adapts to different screen sizes using the clamp() function. The text remains readable across all devices while maintaining appropriate proportions.</p>
@@ -541,9 +782,11 @@ p {
 }</div>
             </div>
 
-            <div class="demo-section" id="navigation">
-                <h3>Responsive Navigation</h3>
-                <p>Navigation that transforms from horizontal layout on desktop to hamburger menu on mobile.</p>
+            <div class="section" id="navigation">
+                <h2>Responsive Navigation</h2>
+                <div class="demo-description">
+                    <p>Navigation that transforms from horizontal layout on desktop to hamburger menu on mobile. This pattern provides optimal user experience across all screen sizes.</p>
+                </div>
 
                 <div class="code-example">/* Responsive Navigation CSS */
 .nav {
