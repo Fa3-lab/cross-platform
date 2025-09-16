@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Flexbox Compatibility Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .nav {
+            background: #2c3e50;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .nav a:hover {
+            background: #34495e;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .demo-section {
+            margin-bottom: 40px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .demo-header {
+            background: #ecf0f1;
+            padding: 15px 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .demo-header h3 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .demo-header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .demo-content {
+            padding: 20px;
+        }
+
+        /* Modern Flexbox (works in modern browsers) */
+        .modern-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .modern-flex .item {
+            background: #27ae60;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            flex: 1;
+            text-align: center;
+        }
+
+        /* Legacy Flexbox (for older browsers like IE10) */
+        .legacy-flex {
+            display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+            display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+            display: -ms-flexbox;      /* TWEENER - IE 10 */
+            display: -webkit-flex;     /* NEW - Chrome */
+            display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            
+            -webkit-box-pack: justify;    /* OLD */
+            -moz-box-pack: justify;       /* OLD */
+            -ms-flex-pack: justify;       /* IE10 */
+            -webkit-justify-content: space-between; /* NEW */
+            justify-content: space-between;         /* NEW */
+            
+            -webkit-box-align: center;    /* OLD */
+            -moz-box-align: center;       /* OLD */
+            -ms-flex-align: center;       /* IE10 */
+            -webkit-align-items: center;  /* NEW */
+            align-items: center;          /* NEW */
+            
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .legacy-flex .item {
+            background: #ffc107;
+            color: #333;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            
+            -webkit-box-flex: 1;      /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: 1;         /* OLD - Firefox 19- */
+            -webkit-flex: 1;          /* Chrome */
+            -ms-flex: 1;              /* IE 10 */
+            flex: 1;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            
+            margin-right: 20px;
+        }
+
+        .legacy-flex .item:last-child {
+            margin-right: 0;
+        }
+
+        /* Broken Flexbox (what happens without prefixes in old browsers) */
+        .broken-flex {
+            display: flex;  /* This won't work in IE9 and below */
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px; /* Gap property is very new, won't work in many browsers */
+            background: #f8d7da;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .broken-flex .item {
+            background: #dc3545;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            flex: 1;
+            text-align: center;
+        }
+
+        /* Fallback using floats (for browsers that don't support flexbox at all) */
+        .float-fallback {
+            background: #d1ecf1;
+            padding: 20px;
+            border-radius: 5px;
+            overflow: hidden; /* Clearfix */
+        }
+
+        .float-fallback .item {
+            background: #17a2b8;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            width: 30%;
+            float: left;
+            margin-right: 5%;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .float-fallback .item:last-child {
+            margin-right: 0;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin-top: 15px;
+        }
+
+        .browser-support {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        .support-item {
+            display: inline-block;
+            margin: 5px 10px 5px 0;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .support-good { background: #d4edda; color: #155724; }
+        .support-partial { background: #fff3cd; color: #856404; }
+        .support-bad { background: #f8d7da; color: #721c24; }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .warning strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CSS Flexbox Compatibility Demo</h1>
+            <p>Understanding flexbox behavior across different browsers</p>
+        </div>
+
+        <div class="nav">
+            <a href="index.html">← Back to Home</a>
+            <a href="#modern">Modern Flexbox</a>
+            <a href="#legacy">Legacy Support</a>
+            <a href="#fallbacks">Fallbacks</a>
+        </div>
+
+        <div class="content">
+            <div class="demo-section" id="modern">
+                <div class="demo-header">
+                    <h3>Modern Flexbox</h3>
+                    <p>Works in modern browsers (Chrome 29+, Firefox 28+, Safari 9+, IE 11+)</p>
+                </div>
+                <div class="demo-content">
+                    <div class="modern-flex">
+                        <div class="item">Item 1</div>
+                        <div class="item">Item 2</div>
+                        <div class="item">Item 3</div>
+                    </div>
+                    
+                    <div class="browser-support">
+                        <strong>Browser Support:</strong>
+                        <span class="support-item support-good">Chrome 29+</span>
+                        <span class="support-item support-good">Firefox 28+</span>
+                        <span class="support-item support-good">Safari 9+</span>
+                        <span class="support-item support-good">Edge 12+</span>
+                        <span class="support-item support-good">IE 11</span>
+                    </div>
+
+                    <div class="code-block">/* Modern Flexbox CSS */
+.modern-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px; /* Note: gap is even newer! */
+}
+
+.modern-flex .item {
+    flex: 1;
+}</div>
+                </div>
+            </div>
+
+            <div class="demo-section" id="legacy">
+                <div class="demo-header">
+                    <h3>Legacy Flexbox with Vendor Prefixes</h3>
+                    <p>Supports older browsers including IE 10 and early webkit browsers</p>
+                </div>
+                <div class="demo-content">
+                    <div class="legacy-flex">
+                        <div class="item">Item 1</div>
+                        <div class="item">Item 2</div>
+                        <div class="item">Item 3</div>
+                    </div>
+
+                    <div class="browser-support">
+                        <strong>Browser Support:</strong>
+                        <span class="support-item support-good">Chrome 21+</span>
+                        <span class="support-item support-good">Firefox 20+</span>
+                        <span class="support-item support-partial">Safari 6.1+</span>
+                        <span class="support-item support-partial">IE 10+</span>
+                        <span class="support-item support-partial">iOS Safari 7+</span>
+                    </div>
+
+                    <div class="code-block">/* Legacy Flexbox with all prefixes */
+.legacy-flex {
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- */
+    display: -ms-flexbox;      /* TWEENER - IE 10 */
+    display: -webkit-flex;     /* NEW - Chrome */
+    display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    
+    -webkit-box-pack: justify;
+    -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.legacy-flex .item {
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}</div>
+
+                    <div class="warning">
+                        <strong>⚠️ Important Notes:</strong>
+                        IE 10 uses -ms-flexbox and has different property names. Some flexbox features work differently or not at all in IE 10.
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <div class="demo-header">
+                    <h3>Broken Flexbox (No Prefixes)</h3>
+                    <p>What happens when you use modern flexbox syntax in older browsers</p>
+                </div>
+                <div class="demo-content">
+                    <div class="broken-flex">
+                        <div class="item">Item 1</div>
+                        <div class="item">Item 2</div>
+                        <div class="item">Item 3</div>
+                    </div>
+
+                    <div class="browser-support">
+                        <strong>Browser Support:</strong>
+                        <span class="support-item support-bad">IE 9-</span>
+                        <span class="support-item support-bad">Old Android</span>
+                        <span class="support-item support-bad">Old iOS Safari</span>
+                        <span class="support-item support-partial">IE 10 (partial)</span>
+                    </div>
+
+                    <div class="warning">
+                        <strong>⚠️ Problem:</strong>
+                        In browsers that don't support flexbox, these items will stack vertically or behave unpredictably. The 'gap' property is particularly problematic as it's very new.
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section" id="fallbacks">
+                <div class="demo-header">
+                    <h3>Float-based Fallback</h3>
+                    <p>Traditional layout method that works in all browsers</p>
+                </div>
+                <div class="demo-content">
+                    <div class="float-fallback">
+                        <div class="item">Item 1</div>
+                        <div class="item">Item 2</div>
+                        <div class="item">Item 3</div>
+                    </div>
+
+                    <div class="browser-support">
+                        <strong>Browser Support:</strong>
+                        <span class="support-item support-good">All Browsers</span>
+                        <span class="support-item support-good">IE 6+</span>
+                    </div>
+
+                    <div class="code-block">/* Float-based fallback */
+.float-fallback {
+    overflow: hidden; /* Clearfix */
+}
+
+.float-fallback .item {
+    width: 30%;
+    float: left;
+    margin-right: 5%;
+    box-sizing: border-box;
+}
+
+.float-fallback .item:last-child {
+    margin-right: 0;
+}</div>
+
+                    <div class="warning">
+                        <strong>💡 Best Practice:</strong>
+                        Use feature detection with tools like Modernizr to provide fallbacks, or use CSS that gracefully degrades.
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <div class="demo-header">
+                    <h3>Complete Cross-Browser Solution</h3>
+                    <p>A robust approach that works across all browsers</p>
+                </div>
+                <div class="demo-content">
+                    <div class="code-block">/* Complete cross-browser flexbox solution */
+
+/* Fallback for non-flexbox browsers */
+.flex-container .item {
+    width: 30%;
+    float: left;
+    margin-right: 5%;
+    box-sizing: border-box;
+}
+
+.flex-container .item:last-child {
+    margin-right: 0;
+}
+
+/* Clear floats */
+.flex-container::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Flexbox for supporting browsers */
+.flexbox .flex-container {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    
+    -webkit-box-pack: justify;
+    -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+}
+
+.flexbox .flex-container .item {
+    width: auto;
+    float: none;
+    margin-right: 0;
+    
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    
+    margin-right: 20px;
+}
+
+.flexbox .flex-container .item:last-child {
+    margin-right: 0;
+}</div>
+
+                    <p><strong>Key Strategies:</strong></p>
+                    <ul style="margin: 15px 0; padding-left: 20px;">
+                        <li>Use feature detection (like Modernizr) to add classes like 'flexbox' to the HTML element</li>
+                        <li>Provide float-based fallbacks first</li>
+                        <li>Override with flexbox properties for supporting browsers</li>
+                        <li>Include all necessary vendor prefixes</li>
+                        <li>Test thoroughly across different browsers and versions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple feature detection for demonstration
+        function supportsFlexbox() {
+            const testElement = document.createElement('div');
+            testElement.style.display = 'flex';
+            return testElement.style.display === 'flex';
+        }
+
+        function supportsFlexGap() {
+            const testElement = document.createElement('div');
+            testElement.style.display = 'flex';
+            testElement.style.gap = '10px';
+            return testElement.style.gap === '10px';
+        }
+
+        // Add feature detection classes
+        if (supportsFlexbox()) {
+            document.documentElement.classList.add('flexbox');
+        } else {
+            document.documentElement.classList.add('no-flexbox');
+        }
+
+        if (supportsFlexGap()) {
+            document.documentElement.classList.add('flex-gap');
+        } else {
+            document.documentElement.classList.add('no-flex-gap');
+        }
+
+        // Display browser compatibility info
+        const browserInfo = document.createElement('div');
+        browserInfo.style.cssText = `
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #2c3e50;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            max-width: 200px;
+        `;
+        
+        browserInfo.innerHTML = `
+            <strong>Your Browser:</strong><br>
+            Flexbox: ${supportsFlexbox() ? '✅' : '❌'}<br>
+            Flex Gap: ${supportsFlexGap() ? '✅' : '❌'}
+        `;
+        
+        document.body.appendChild(browserInfo);
+    </script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cross-Platform Compatibility Demos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .demos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .demo-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .demo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .demo-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .demo-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .demo-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .demo-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .category {
+            display: inline-block;
+            background: #e74c3c;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .category.browser { background: #3498db; }
+        .category.device { background: #e67e22; }
+        .category.performance { background: #9b59b6; }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .demos-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .demo-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Cross-Platform Compatibility Demos</h1>
+            <p>Interactive examples showcasing cross-browser and cross-device compatibility challenges</p>
+        </div>
+
+        <div class="demos-grid">
+            <div class="demo-card">
+                <span class="category browser">Cross-Browser</span>
+                <h3>CSS Flexbox Compatibility</h3>
+                <p>Demonstrates how flexbox behaves differently across browsers, especially in older versions. Shows fallbacks and vendor prefixes needed.</p>
+                <a href="flexbox-demo.html" class="demo-link">View Demo</a>
+            </div>
+
+            <div class="demo-card">
+                <span class="category browser">Cross-Browser</span>
+                <h3>CSS Grid Layout Issues</h3>
+                <p>Showcases CSS Grid support variations and provides fallback strategies for browsers that don't support modern grid features.</p>
+                <a href="grid-demo.html" class="demo-link">View Demo</a>
+            </div>
+
+            <div class="demo-card">
+                <span class="category browser">Cross-Browser</span>
+                <h3>JavaScript ES6+ Features</h3>
+                <p>Interactive examples of ES6+ features that break in older browsers, with polyfills and transpilation solutions.</p>
+                <a href="javascript-demo.html" class="demo-link">View Demo</a>
+            </div>
+
+            <div class="demo-card">
+                <span class="category device">Cross-Device</span>
+                <h3>Responsive Design Showcase</h3>
+                <p>Demonstrates responsive design principles across different screen sizes, from mobile phones to desktop monitors.</p>
+                <a href="responsive-demo.html" class="demo-link">View Demo</a>
+            </div>
+
+            <div class="demo-card">
+                <span class="category device">Cross-Device</span>
+                <h3>Touch vs Mouse Interactions</h3>
+                <p>Shows how user interactions differ between touch devices and traditional mouse/keyboard setups.</p>
+                <a href="interaction-demo.html" class="demo-link">View Demo</a>
+            </div>
+
+            <div class="demo-card">
+                <span class="category performance">Performance</span>
+                <h3>Device Performance Optimization</h3>
+                <p>Compares loading performance across different devices and demonstrates optimization techniques.</p>
+                <a href="performance-demo.html" class="demo-link">View Demo</a>
+            </div>
+
+            <div class="demo-card">
+                <span class="category browser">Cross-Browser</span>
+                <h3>CSS Vendor Prefixes</h3>
+                <p>Examples of CSS properties that require vendor prefixes for cross-browser compatibility.</p>
+                <a href="vendor-prefix-demo.html" class="demo-link">View Demo</a>
+            </div>
+
+            <div class="demo-card">
+                <span class="category browser">Cross-Browser</span>
+                <h3>HTML5 Form Compatibility</h3>
+                <p>Demonstrates HTML5 form features and their fallbacks for browsers with limited support.</p>
+                <a href="form-demo.html" class="demo-link">View Demo</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2025 Cross-Platform Compatibility Demo Suite | Built for educational purposes</p>
+        </div>
+    </div>
+</body>
+</html>

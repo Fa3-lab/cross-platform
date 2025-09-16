@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript ES6+ Compatibility Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .nav {
+            background: #2c3e50;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .nav a:hover {
+            background: #34495e;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .demo-section {
+            margin-bottom: 40px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .demo-header {
+            background: #ecf0f1;
+            padding: 15px 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .demo-header h3 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .demo-header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .demo-content {
+            padding: 20px;
+        }
+
+        .code-demo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+
+        .es6-code {
+            border-left: 4px solid #27ae60;
+        }
+
+        .es5-code {
+            border-left: 4px solid #e74c3c;
+        }
+
+        .code-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding: 5px 0;
+            border-bottom: 1px solid #34495e;
+        }
+
+        .browser-support {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        .support-item {
+            display: inline-block;
+            margin: 5px 10px 5px 0;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .support-good { background: #d4edda; color: #155724; }
+        .support-partial { background: #fff3cd; color: #856404; }
+        .support-bad { background: #f8d7da; color: #721c24; }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .warning strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .interactive-demo {
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .demo-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 0.9rem;
+        }
+
+        .demo-button:hover {
+            background: #0056b3;
+        }
+
+        .demo-button.broken {
+            background: #dc3545;
+        }
+
+        .demo-button.broken:hover {
+            background: #c82333;
+        }
+
+        .output {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            min-height: 50px;
+        }
+
+        .polyfill-section {
+            background: #d1ecf1;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .polyfill-section h4 {
+            color: #0c5460;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .code-demo {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>JavaScript ES6+ Compatibility Demo</h1>
+            <p>Exploring modern JavaScript features and browser compatibility</p>
+        </div>
+
+        <div class="nav">
+            <a href="index.html">← Back to Home</a>
+            <a href="#problems">❌ Problems</a>
+            <a href="#solutions">✅ Solutions</a>
+            <a href="#polyfills">🔧 Polyfills</a>
+            <a href="#tools">🛠️ Tools</a>
+        </div>
+
+        <div class="content">
+            <!-- PROBLEMS SECTION -->
+            <div class="demo-section" id="problems">
+                <div class="demo-header">
+                    <h3>❌ The Problems: What Breaks in Older Browsers</h3>
+                    <p>These modern JavaScript features will cause errors in older browsers like IE11 and below</p>
+                </div>
+                <div class="demo-content">
+                    <div class="warning">
+                        <strong>⚠️ WARNING:</strong>
+                        The code examples below will break or behave unexpectedly in older browsers. 
+                        Try running them to see the errors!
+                    </div>
+
+                    <div class="interactive-demo">
+                        <h4>🔥 Try These Broken Examples (in older browsers):</h4>
+                        <button class="demo-button broken" onclick="tryArrowFunctions()">Arrow Functions</button>
+                        <button class="demo-button broken" onclick="tryLetConst()">Let/Const</button>
+                        <button class="demo-button broken" onclick="tryTemplateLiterals()">Template Literals</button>
+                        <button class="demo-button broken" onclick="tryDestructuring()">Destructuring</button>
+                        <button class="demo-button broken" onclick="tryClasses()">Classes</button>
+                        <div class="output" id="problems-output">Click the buttons above to see what breaks in older browsers...</div>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-title">💥 These Will Break in IE11 and Below</div>
+// Arrow functions - SyntaxError
+const add = (a, b) => a + b;
+
+// Let/const - SyntaxError or unexpected behavior
+let x = 5;
+const y = 10;
+
+// Template literals - SyntaxError
+const name = 'World';
+const greeting = `Hello, ${name}!`;
+
+// Destructuring - SyntaxError
+const [first, second] = [1, 2];
+const {prop} = {prop: 'value'};
+
+// Classes - SyntaxError
+class MyClass {
+    constructor() {
+        this.value = 42;
+    }
+}
+
+// Async/await - SyntaxError
+async function fetchData() {
+    const response = await fetch('/api/data');
+    return response.json();
+}
+
+// Spread operator - SyntaxError
+const arr1 = [1, 2, 3];
+const arr2 = [...arr1, 4, 5];
+
+// Default parameters - SyntaxError
+function greet(name = 'Anonymous') {
+    return `Hello, ${name}!`;
+}
+                    </div>
+
+                    <div class="browser-support">
+                        <h4>Browser Support Issues:</h4>
+                        <div style="margin-top: 10px;">
+                            <div><strong>Internet Explorer 11 and below:</strong> ❌ None of these features work</div>
+                            <div><strong>Safari 9 and below:</strong> ❌ Most features missing</div>
+                            <div><strong>Chrome 44 and below:</strong> ❌ Partial or no support</div>
+                            <div><strong>Firefox 21 and below:</strong> ❌ Limited support</div>
+                            <div><strong>Android Browser 4.4 and below:</strong> ❌ Major compatibility issues</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SOLUTIONS SECTION -->
+            <div class="demo-section" id="solutions">
+                <div class="demo-header">
+                    <h3>✅ The Solutions: Cross-Browser Compatible Code</h3>
+                    <p>Here's how to write the same functionality in a way that works everywhere</p>
+                </div>
+                <div class="demo-content">
+                    <div class="demo-section" id="arrow-functions">
+                        <div class="demo-header">
+                            <h3>Solution 1: Arrow Functions → Regular Functions</h3>
+                            <p>Replace arrow functions with traditional function expressions</p>
+                        </div>
+                <div class="demo-content">
+                        <div class="code-demo">
+                            <div class="code-block es5-code">
+                                <div class="code-title">❌ PROBLEM: Modern ES6 Code</div>
+// Basic arrow function
+const add = (a, b) => a + b;
+
+// Array methods with arrows
+const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map(n => n * 2);
+const evens = numbers.filter(n => n % 2 === 0);
+
+// Lexical 'this' binding
+class Timer {
+    constructor() {
+        this.seconds = 0;
+        setInterval(() => {
+            this.seconds++; // 'this' refers to Timer instance
+            console.log(this.seconds);
+        }, 1000);
+    }
+}
+                        </div>
+                            <div class="code-block es6-code">
+                                <div class="code-title">✅ SOLUTION: Cross-Browser Compatible</div>
+// Traditional function expression
+var add = function(a, b) {
+    return a + b;
+};
+
+// Array methods with function expressions
+var numbers = [1, 2, 3, 4, 5];
+var doubled = numbers.map(function(n) {
+    return n * 2;
+});
+var evens = numbers.filter(function(n) {
+    return n % 2 === 0;
+});
+
+// Manual 'this' binding
+function Timer() {
+    var self = this;
+    this.seconds = 0;
+    setInterval(function() {
+        self.seconds++; // Need to capture 'this'
+        console.log(self.seconds);
+    }, 1000);
+}
+                            </div>
+                        </div>
+
+                        <div class="browser-support">
+                            <strong>Compatibility:</strong>
+                            <span class="support-item support-bad">Arrow Functions: IE (None), Safari 9-</span>
+                            <span class="support-item support-good">Regular Functions: All Browsers ✅</span>
+                        </div>
+
+                        <div class="interactive-demo">
+                            <h4>Test Compatibility:</h4>
+                            <button class="demo-button" onclick="testArrowFunctions()">Test Cross-Browser Solution</button>
+                            <div class="output" id="arrow-output"></div>
+                        </div>
+                    </div>
+
+                <div class="demo-section" id="let-const">
+                    <div class="demo-header">
+                        <h3>Solution 2: Let/Const → Var + IIFE</h3>
+                        <p>Replace block-scoped variables with function-scoped alternatives</p>
+                    </div>
+                    <div class="demo-content">
+                        <div class="code-demo">
+                            <div class="code-block es5-code">
+                                <div class="code-title">❌ PROBLEM: Modern Block Scope</div>
+// Block scope
+if (true) {
+    let blockScoped = "I'm block scoped";
+    const CONSTANT = "I can't be reassigned";
+    console.log(blockScoped); // Works
+}
+// console.log(blockScoped); // ReferenceError
+
+// No hoisting issues
+console.log(x); // ReferenceError (temporal dead zone)
+let x = 5;
+
+// Loop scope fix
+for (let i = 0; i < 3; i++) {
+    setTimeout(() => console.log(i), 100); // Prints 0, 1, 2
+}
+
+// Constants
+const obj = { name: 'John' };
+obj.name = 'Jane'; // OK - object mutation allowed
+// obj = {}; // TypeError - reassignment not allowed
+                        </div>
+                            <div class="code-block es6-code">
+                                <div class="code-title">✅ SOLUTION: Cross-Browser Scope Control</div>
+// Function scope
+if (true) {
+    var functionScoped = "I'm function scoped";
+    var PSEUDO_CONSTANT = "I can be reassigned";
+    console.log(functionScoped); // Works
+}
+console.log(functionScoped); // Still works!
+
+// Hoisting
+console.log(y); // undefined (not an error)
+var y = 5;
+
+// Loop scope issue
+for (var i = 0; i < 3; i++) {
+    setTimeout(function() {
+        console.log(i); // Prints 3, 3, 3
+    }, 100);
+}
+
+// No true constants in ES5
+var PSEUDO_CONSTANT = "Can be changed";
+PSEUDO_CONSTANT = "Changed!"; // No error
+                        </div>
+                    </div>
+
+                    <div class="browser-support">
+                        <strong>Browser Support:</strong>
+                        <span class="support-item support-good">Chrome 49+</span>
+                        <span class="support-item support-good">Firefox 36+</span>
+                        <span class="support-item support-good">Safari 10+</span>
+                        <span class="support-item support-good">Edge 12+</span>
+                        <span class="support-item support-bad">IE 10-</span>
+                        <span class="support-item support-partial">IE 11 (partial)</span>
+                    </div>
+
+                    <div class="interactive-demo">
+                        <h4>Interactive Demo:</h4>
+                        <button class="demo-button" onclick="testLetConst()">Test Let/Const</button>
+                        <button class="demo-button broken" onclick="testVar()">Test Var Behavior</button>
+                        <div class="output" id="letconst-output"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section" id="template-literals">
+                <div class="demo-header">
+                    <h3>Template Literals</h3>
+                    <p>String interpolation and multiline strings</p>
+                </div>
+                <div class="demo-content">
+                    <div class="code-demo">
+                        <div class="code-block es6-code">
+                            <div class="code-title">ES6 Template Literals</div>
+// String interpolation
+const name = 'World';
+const greeting = `Hello, ${name}!`;
+
+// Expressions in templates
+const a = 5, b = 10;
+const result = `The sum of ${a} and ${b} is ${a + b}`;
+
+// Multiline strings
+const multiline = `
+    This is a
+    multiline string
+    with proper indentation
+`;
+
+// Tagged templates
+function highlight(strings, ...values) {
+    return strings.reduce((result, string, i) => {
+        const value = values[i] ? `<mark>${values[i]}</mark>` : '';
+        return result + string + value;
+    }, '');
+}
+
+const highlighted = highlight`Hello ${name}, you have ${5} messages`;
+                        </div>
+                        <div class="code-block es5-code">
+                            <div class="code-title">ES5 String Concatenation</div>
+// String concatenation
+var name = 'World';
+var greeting = 'Hello, ' + name + '!';
+
+// Expressions require concatenation
+var a = 5, b = 10;
+var result = 'The sum of ' + a + ' and ' + b + ' is ' + (a + b);
+
+// Multiline strings (awkward)
+var multiline = '\n' +
+    '    This is a\n' +
+    '    multiline string\n' +
+    '    with manual line breaks\n';
+
+// No equivalent to tagged templates
+function highlight(template, name, count) {
+    return template
+        .replace('${name}', '<mark>' + name + '</mark>')
+        .replace('${count}', '<mark>' + count + '</mark>');
+}
+
+var highlighted = highlight('Hello ${name}, you have ${count} messages', name, 5);
+                        </div>
+                    </div>
+
+                    <div class="browser-support">
+                        <strong>Browser Support:</strong>
+                        <span class="support-item support-good">Chrome 41+</span>
+                        <span class="support-item support-good">Firefox 34+</span>  
+                        <span class="support-item support-good">Safari 9+</span>
+                        <span class="support-item support-good">Edge 12+</span>
+                        <span class="support-item support-bad">IE (None)</span>
+                    </div>
+
+                    <div class="interactive-demo">
+                        <h4>Interactive Demo:</h4>
+                        <button class="demo-button" onclick="testTemplateLiterals()">Test Template Literals</button>
+                        <button class="demo-button broken" onclick="testStringConcatenation()">Test String Concatenation</button>
+                        <div class="output" id="template-output"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section" id="destructuring">
+                <div class="demo-header">
+                    <h3>Destructuring Assignment</h3>
+                    <p>Extracting values from arrays and objects</p>
+                </div>
+                <div class="demo-content">
+                    <div class="code-demo">
+                        <div class="code-block es6-code">
+                            <div class="code-title">ES6 Destructuring</div>
+// Array destructuring
+const [first, second, ...rest] = [1, 2, 3, 4, 5];
+console.log(first); // 1
+console.log(rest);  // [3, 4, 5]
+
+// Object destructuring
+const person = { name: 'John', age: 30, city: 'New York' };
+const { name, age, city = 'Unknown' } = person;
+
+// Nested destructuring
+const user = {
+    id: 1,
+    profile: {
+        name: 'Jane',
+        settings: { theme: 'dark', lang: 'en' }
+    }
+};
+const { profile: { settings: { theme } } } = user;
+
+// Function parameter destructuring
+function greet({ name, age = 25 }) {
+    return `Hello ${name}, you are ${age} years old`;
+}
+                        </div>
+                        <div class="code-block es5-code">
+                            <div class="code-title">ES5 Manual Extraction</div>
+// Array extraction
+var arr = [1, 2, 3, 4, 5];
+var first = arr[0];
+var second = arr[1];
+var rest = arr.slice(2);
+console.log(first); // 1
+console.log(rest);  // [3, 4, 5]
+
+// Object property access
+var person = { name: 'John', age: 30, city: 'New York' };
+var name = person.name;
+var age = person.age;
+var city = person.city || 'Unknown';
+
+// Nested property access
+var user = {
+    id: 1,
+    profile: {
+        name: 'Jane',
+        settings: { theme: 'dark', lang: 'en' }
+    }
+};
+var theme = user.profile.settings.theme;
+
+// Function with manual parameter handling
+function greet(person) {
+    var name = person.name;
+    var age = person.age || 25;
+    return 'Hello ' + name + ', you are ' + age + ' years old';
+}
+                        </div>
+                    </div>
+
+                    <div class="browser-support">
+                        <strong>Browser Support:</strong>
+                        <span class="support-item support-good">Chrome 49+</span>
+                        <span class="support-item support-good">Firefox 41+</span>
+                        <span class="support-item support-good">Safari 8+</span>
+                        <span class="support-item support-good">Edge 14+</span>
+                        <span class="support-item support-bad">IE (None)</span>
+                    </div>
+
+                    <div class="interactive-demo">
+                        <h4>Interactive Demo:</h4>
+                        <button class="demo-button" onclick="testDestructuring()">Test Destructuring</button>
+                        <button class="demo-button broken" onclick="testManualExtraction()">Test Manual Extraction</button>
+                        <div class="output" id="destructuring-output"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <div class="demo-header">
+                    <h3>Polyfills and Transpilation Solutions</h3>
+                    <p>Making modern JavaScript work in older browsers</p>
+                </div>
+                <div class="demo-content">
+                    <div class="polyfill-section">
+                        <h4>Babel Transpilation Example</h4>
+                        <div class="code-demo">
+                            <div class="code-block es6-code">
+                                <div class="code-title">Source (ES6+)</div>
+class Person {
+    constructor(name) {
+        this.name = name;
+    }
+    
+    greet = () => {
+        return `Hello, I'm ${this.name}`;
+    }
+    
+    async fetchData() {
+        const response = await fetch('/api/data');
+        const data = await response.json();
+        return data;
+    }
+}
+
+const people = ['Alice', 'Bob'].map(name => new Person(name));
+                            </div>
+                            <div class="code-block es5-code">
+                                <div class="code-title">Compiled (ES5)</div>
+"use strict";
+
+function _asyncToGenerator(fn) { /* polyfill code */ }
+
+var Person = function Person(name) {
+    var _this = this;
+    
+    this.name = name;
+    
+    this.greet = function() {
+        return "Hello, I'm " + _this.name;
+    };
+};
+
+Person.prototype.fetchData = function() {
+    var _this = this;
+    return _asyncToGenerator(function*() {
+        var response = yield fetch('/api/data');
+        var data = yield response.json();
+        return data;
+    })();
+};
+
+var people = ['Alice', 'Bob'].map(function(name) {
+    return new Person(name);
+});
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="warning">
+                        <strong>⚠️ Production Solutions:</strong>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li><strong>Babel:</strong> Transpiles ES6+ to ES5 for broad compatibility</li>
+                            <li><strong>TypeScript:</strong> Adds types and transpiles to older JavaScript</li>
+                            <li><strong>Core-js:</strong> Provides polyfills for missing features</li>
+                            <li><strong>@babel/preset-env:</strong> Smart transpilation based on target browsers</li>
+                            <li><strong>Feature Detection:</strong> Use libraries like Modernizr</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+// Example .browserslistrc for targeting browsers
+> 1%
+last 2 versions
+not ie <= 10
+
+// Babel configuration for broad compatibility
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": "> 0.25%, not dead",
+      "useBuiltIns": "entry",
+      "corejs": 3
+    }]
+  ]
+}
+                    </div>
+                </div>
+
+            <!-- POLYFILLS SECTION -->
+            <div class="demo-section" id="polyfills">
+                <div class="demo-header">
+                    <h3>🔧 Polyfills: Adding Missing Features</h3>
+                    <p>JavaScript polyfills that add modern features to older browsers</p>
+                </div>
+                <div class="demo-content">
+                    <div class="polyfill-section">
+                        <h4>Core Polyfills You Can Add</h4>
+                        <div class="code-block">
+                            <div class="code-title">Essential Polyfills for IE11 Support</div>
+// Array methods polyfills
+if (!Array.prototype.includes) {
+    Array.prototype.includes = function(item) {
+        return this.indexOf(item) !== -1;
+    };
+}
+
+if (!Array.prototype.find) {
+    Array.prototype.find = function(callback) {
+        for (var i = 0; i < this.length; i++) {
+            if (callback(this[i], i, this)) {
+                return this[i];
+            }
+        }
+        return undefined;
+    };
+}
+
+// Promise polyfill (simplified)
+if (typeof Promise === 'undefined') {
+    window.Promise = function(executor) {
+        var self = this;
+        self.state = 'pending';
+        self.value = undefined;
+        self.handlers = [];
+        
+        function resolve(result) {
+            if (self.state === 'pending') {
+                self.state = 'fulfilled';
+                self.value = result;
+                self.handlers.forEach(handle);
+            }
+        }
+        
+        function reject(error) {
+            if (self.state === 'pending') {
+                self.state = 'rejected';
+                self.value = error;
+                self.handlers.forEach(handle);
+            }
+        }
+        
+        executor(resolve, reject);
+    };
+}
+
+// Object.assign polyfill
+if (typeof Object.assign !== 'function') {
+    Object.assign = function(target) {
+        for (var i = 1; i < arguments.length; i++) {
+            var source = arguments[i];
+            for (var key in source) {
+                if (source.hasOwnProperty(key)) {
+                    target[key] = source[key];
+                }
+            }
+        }
+        return target;
+    };
+}
+                        </div>
+                    </div>
+
+                    <div class="interactive-demo">
+                        <h4>Test Polyfills:</h4>
+                        <button class="demo-button" onclick="testPolyfills()">Test Array.includes</button>
+                        <button class="demo-button" onclick="testObjectAssign()">Test Object.assign</button>
+                        <div class="output" id="polyfill-output">Click buttons to test polyfilled features...</div>
+                    </div>
+
+                    <div class="browser-support">
+                        <h4>Popular Polyfill Libraries:</h4>
+                        <div style="margin-top: 10px;">
+                            <div><strong>core-js:</strong> Comprehensive ES5/ES6+ polyfills</div>
+                            <div><strong>polyfill.io:</strong> Conditional polyfill loading service</div>
+                            <div><strong>es6-shim:</strong> ECMAScript 6 compatibility shims</div>
+                            <div><strong>Modernizr:</strong> Feature detection + polyfill loading</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOOLS SECTION -->
+            <div class="demo-section" id="tools">
+                <div class="demo-header">
+                    <h3>🛠️ Development Tools: Automated Solutions</h3>
+                    <p>Tools that automatically handle cross-browser compatibility</p>
+                </div>
+                <div class="demo-content">
+                    <div class="code-block">
+                        <div class="code-title">Babel Configuration (.babelrc)</div>
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": {
+        "browsers": ["> 1%", "last 2 versions", "not ie <= 10"]
+      },
+      "useBuiltIns": "usage",
+      "corejs": 3
+    }]
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-transform-arrow-functions",
+    "@babel/plugin-transform-block-scoping"
+  ]
+}
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-title">Webpack Configuration</div>
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      }
+    ]
+  },
+  target: ['web', 'es5'] // Support older browsers
+};
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-title">TypeScript Target Configuration</div>
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "lib": ["DOM", "DOM.Iterable", "ES6"],
+    "module": "CommonJS",
+    "strict": true,
+    "downlevelIteration": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
+                    </div>
+
+                    <div class="warning">
+                        <strong>🎯 Recommended Development Workflow:</strong>
+                        <ol style="margin-top: 10px; padding-left: 20px;">
+                            <li>Write modern JavaScript (ES6+)</li>
+                            <li>Use Babel or TypeScript for transpilation</li>
+                            <li>Configure target browsers in browserslist</li>
+                            <li>Add polyfills for missing features</li>
+                            <li>Test in multiple browsers (BrowserStack, Selenium)</li>
+                            <li>Use source maps for debugging</li>
+                        </ol>
+                    </div>
+
+                    <div class="browser-support">
+                        <h4>🔧 Essential Development Tools:</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                                <strong>Babel</strong><br>
+                                <small>Transpiles ES6+ to ES5</small>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                                <strong>TypeScript</strong><br>
+                                <small>Type-safe JavaScript + transpilation</small>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                                <strong>Webpack</strong><br>
+                                <small>Module bundling + optimization</small>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                                <strong>ESLint</strong><br>
+                                <small>Code quality + compatibility checks</small>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                                <strong>Browserslist</strong><br>
+                                <small>Target browser configuration</small>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                                <strong>Can I Use</strong><br>
+                                <small>Browser support lookup</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Problem demonstration functions
+        function tryArrowFunctions() {
+            const output = document.getElementById('problems-output');
+            try {
+                // This will fail in IE11 and below
+                eval('const add = (a, b) => a + b; add(2, 3);');
+                output.textContent = '✅ Your browser supports arrow functions!';
+                output.style.color = '#155724';
+                output.style.backgroundColor = '#d4edda';
+            } catch(e) {
+                output.textContent = '❌ ARROW FUNCTIONS FAILED: ' + e.message + '\n\nThis is exactly what happens in IE11!';
+                output.style.color = '#721c24';
+                output.style.backgroundColor = '#f8d7da';
+            }
+        }
+
+        function tryLetConst() {
+            const output = document.getElementById('problems-output');
+            try {
+                eval('let x = 5; const y = 10;');
+                output.textContent = '✅ Your browser supports let/const!';
+                output.style.color = '#155724';
+                output.style.backgroundColor = '#d4edda';
+            } catch(e) {
+                output.textContent = '❌ LET/CONST FAILED: ' + e.message + '\n\nOlder browsers throw syntax errors!';
+                output.style.color = '#721c24';
+                output.style.backgroundColor = '#f8d7da';
+            }
+        }
+
+        function tryTemplateLiterals() {
+            const output = document.getElementById('problems-output');
+            try {
+                eval('const name = "World"; const msg = `Hello, ${name}!`;');
+                output.textContent = '✅ Your browser supports template literals!';
+                output.style.color = '#155724';
+                output.style.backgroundColor = '#d4edda';
+            } catch(e) {
+                output.textContent = '❌ TEMPLATE LITERALS FAILED: ' + e.message + '\n\nBackticks break in older browsers!';
+                output.style.color = '#721c24';
+                output.style.backgroundColor = '#f8d7da';
+            }
+        }
+
+        function tryDestructuring() {
+            const output = document.getElementById('problems-output');
+            try {
+                eval('const [a, b] = [1, 2]; const {x} = {x: 5};');
+                output.textContent = '✅ Your browser supports destructuring!';
+                output.style.color = '#155724';
+                output.style.backgroundColor = '#d4edda';
+            } catch(e) {
+                output.textContent = '❌ DESTRUCTURING FAILED: ' + e.message + '\n\nDestructuring syntax is not recognized!';
+                output.style.color = '#721c24';
+                output.style.backgroundColor = '#f8d7da';
+            }
+        }
+
+        function tryClasses() {
+            const output = document.getElementById('problems-output');
+            try {
+                eval('class Test { constructor() { this.x = 1; } }');
+                output.textContent = '✅ Your browser supports classes!';
+                output.style.color = '#155724';
+                output.style.backgroundColor = '#d4edda';
+            } catch(e) {
+                output.textContent = '❌ CLASSES FAILED: ' + e.message + '\n\nClass syntax breaks in older browsers!';
+                output.style.color = '#721c24';
+                output.style.backgroundColor = '#f8d7da';
+            }
+        }
+
+        // Feature detection for display
+        function hasArrowFunctions() {
+            try {
+                eval('(() => {})');
+                return true;
+            } catch(e) {
+                return false;
+            }
+        }
+
+        function hasLetConst() {
+            try {
+                eval('let x = 1; const y = 2;');
+                return true;
+            } catch(e) {
+                return false;
+            }
+        }
+
+        function hasTemplateLiterals() {
+            try {
+                eval('`template`');
+                return true;
+            } catch(e) {
+                return false;
+            }
+        }
+
+        function hasDestructuring() {
+            try {
+                eval('const {x} = {x: 1}; const [y] = [2];');
+                return true;
+            } catch(e) {
+                return false;
+            }
+        }
+
+        // Demo functions
+        function testArrowFunctions() {
+            const output = document.getElementById('arrow-output');
+            try {
+                const numbers = [1, 2, 3, 4, 5];
+                const doubled = numbers.map(n => n * 2);
+                const sum = numbers.reduce((a, b) => a + b, 0);
+                
+                output.textContent = `✅ Arrow functions work!\nDoubled: [${doubled.join(', ')}]\nSum: ${sum}`;
+                output.style.color = '#155724';
+                output.style.backgroundColor = '#d4edda';
+            } catch(e) {
+                output.textContent = `❌ Error: ${e.message}`;
+                output.style.color = '#721c24';
+                output.style.backgroundColor = '#f8d7da';
+            }
+        }
+
+        function testArrowFunctionsES5() {
+            const output = document.getElementById('arrow-output');
+            try {
+                var numbers = [1, 2, 3, 4, 5];
+                var doubled = numbers.map(function(n) { return n * 2; });
+                var sum = numbers.reduce(function(a, b) { return a + b; }, 0);
+                
+                output.textContent = '✅ ES5 functions work (but more verbose)!\nDoubled: [' + doubled.join(', ') + ']\nSum: ' + sum;
+                output.style.color = '#856404';
+                output.style.backgroundColor = '#fff3cd';
+            } catch(e) {
+                output.textContent = '❌ Error: ' + e.message;
+                output.style.color = '#721c24';
+                output.style.backgroundColor = '#f8d7da';
+            }
+        }
+
+        function testLetConst() {
+            const output = document.getElementById('letconst-output');
+            try {
+                let message = 'Block scoped variable';
+                const CONSTANT = 'Cannot be reassigned';
+                
+                // Demonstrate block scope
+                if (true) {
+                    let blockVar = 'Only exists in this block';
+                    message += '\nBlock variable: ' + blockVar;
+                }
+                
+                output.textContent = `✅ Let/const work!\n${message}\nConstant: ${CONSTANT}`;
+                output.style.color = '#155724';
+                output.style.backgroundColor = '#d4edda';
+            } catch(e) {
+                output.textContent = `❌ Error: ${e.message}`;
+                output.style.color = '#721c24';
+                output.style.backgroundColor = '#f8d7da';
+            }
+        }
+
+        function testVar() {
+            const output = document.getElementById('letconst-output');
+            try {
+                var message = 'Function scoped variable';
+                var PSEUDO_CONSTANT = 'Can be reassigned';
+                
+                // Demonstrate function scope
+                if (true) {
+                    var blockVar = 'Available outside block too';
+                }
+                
+                PSEUDO_CONSTANT = 'See, I was reassigned!';
+                message += '\nBlock variable: ' + blockVar;
+                
+                output.textContent = '⚠️ Var behavior (older browsers):\n' + message + '\nPseudo-constant: ' + PSEUDO_CONSTANT;
+                output.style.color = '#856404';
+                output.style.backgroundColor = '#fff3cd';
+            } catch(e) {
+                output.textContent = '❌ Error: ' + e.message;
+                output.style.color = '#721c24';
+                output.style.backgroundColor = '#f8d7da';
+            }
+        }
+
+        function testTemplateLiterals() {
+            const output = document.getElementById('template-output');
+            try {
+                const name = 'Developer';
+                const age = 25;
+                const message = `Hello ${name}!
+You are ${age} years old.
+Next year you'll be ${age + 1}.`;
+                
+                output.textContent = `✅ Template literals work!\n${message}`;
+                output.style.color = '#155724';
+                output.style.backgroundColor = '#d4edda';
+            } catch(e) {
+                output.textContent = `❌ Error: ${e.message}`;
+                output.style.color = '#721c24';
+                output.style.backgroundColor = '#f8d7da';
+            }
+        }
+
+        function testStringConcatenation() {
+            const output = document.getElementById('template-output');
+            try {
+                var name = 'Developer';
+                var age = 25;
+                var message = 'Hello ' + name + '!\n' +
+                    'You are ' + age + ' years old.\n' +
+                    'Next year you\'ll be ' + (age + 1) + '.';
+                
+                output.textContent = '⚠️ String concatenation (older browsers):\n' + message;
+                output.style.color = '#856404';
+                output.style.backgroundColor = '#fff3cd';
+            } catch(e) {
+                output.textContent = '❌ Error: ' + e.message;
+                output.style.color = '#721c24';
+                output.style.backgroundColor = '#f8d7da';
+            }
+        }
+
+        function testDestructuring() {
+            const output = document.getElementById('destructuring-output');
+            try {
+                const person = { name: 'Alice', age: 30, city: 'Boston' };
+                const { name, age, city } = person;
+                
+                const numbers = [1, 2, 3, 4, 5];
+                const [first, second, ...rest] = numbers;
+                
+                output.textContent = `✅ Destructuring works!\nPerson: ${name}, ${age}, ${city}\nNumbers: first=${first}, second=${second}, rest=[${rest.join(', ')}]`;
+                output.style.color = '#155724';
+                output.style.backgroundColor = '#d4edda';
+            } catch(e) {
+                output.textContent = `❌ Error: ${e.message}`;
+                output.style.color = '#721c24';
+                output.style.backgroundColor = '#f8d7da';
+            }
+        }
+
+        function testManualExtraction() {
+            const output = document.getElementById('destructuring-output');
+            try {
+                var person = { name: 'Alice', age: 30, city: 'Boston' };
+                var name = person.name;
+                var age = person.age;
+                var city = person.city;
+                
+                var numbers = [1, 2, 3, 4, 5];
+                var first = numbers[0];
+                var second = numbers[1];
+                var rest = numbers.slice(2);
+                
+                output.textContent = '⚠️ Manual extraction (older browsers):\nPerson: ' + name + ', ' + age + ', ' + city + '\nNumbers: first=' + first + ', second=' + second + ', rest=[' + rest.join(', ') + ']';
+                output.style.color = '#856404';
+                output.style.backgroundColor = '#fff3cd';
+            } catch(e) {
+                output.textContent = '❌ Error: ' + e.message;
+                output.style.color = '#721c24';
+                output.style.backgroundColor = '#f8d7da';
+            }
+        }
+
+        function testPolyfills() {
+            const output = document.getElementById('polyfill-output');
+            try {
+                // Test Array.includes (may be polyfilled)
+                const arr = [1, 2, 3, 4, 5];
+                const hasThree = arr.includes(3);
+                const hasNine = arr.includes(9);
+                
+                output.textContent = `✅ Array.includes test:\narray.includes(3): ${hasThree}\narray.includes(9): ${hasNine}\n\n${Array.prototype.includes.toString().includes('indexOf') ? '🔧 Using polyfill' : '✅ Native support'}`;
+                output.style.color = '#155724';
+                output.style.backgroundColor = '#d4edda';
+            } catch(e) {
+                output.textContent = `❌ Error: ${e.message}`;
+                output.style.color = '#721c24';
+                output.style.backgroundColor = '#f8d7da';
+            }
+        }
+
+        function testObjectAssign() {
+            const output = document.getElementById('polyfill-output');
+            try {
+                const target = { a: 1 };
+                const source1 = { b: 2 };
+                const source2 = { c: 3 };
+                const result = Object.assign(target, source1, source2);
+                
+                output.textContent = `✅ Object.assign test:\nResult: ${JSON.stringify(result, null, 2)}\n\n${Object.assign.toString().includes('hasOwnProperty') ? '🔧 Using polyfill' : '✅ Native support'}`;
+                output.style.color = '#155724';
+                output.style.backgroundColor = '#d4edda';
+            } catch(e) {
+                output.textContent = `❌ Error: ${e.message}`;
+                output.style.color = '#721c24';
+                output.style.backgroundColor = '#f8d7da';
+            }
+        }
+
+        // Display browser feature support
+        const browserInfo = document.createElement('div');
+        browserInfo.style.cssText = `
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #2c3e50;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            max-width: 220px;
+        `;
+        
+        browserInfo.innerHTML = `
+            <strong>Your Browser Support:</strong><br>
+            Arrow Functions: ${hasArrowFunctions() ? '✅' : '❌'}<br>
+            Let/Const: ${hasLetConst() ? '✅' : '❌'}<br>
+            Template Literals: ${hasTemplateLiterals() ? '✅' : '❌'}<br>
+            Destructuring: ${hasDestructuring() ? '✅' : '❌'}
+        `;
+        
+        document.body.appendChild(browserInfo);
+    </script>
+</body>
+</html>
